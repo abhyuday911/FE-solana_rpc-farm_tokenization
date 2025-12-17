@@ -1,45 +1,44 @@
 "use client";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { useInitializeFarm } from "@/hooks/useFarm";
-import { useState } from "react";
 import { PublicKey } from "@solana/web3.js";
-import Link from "next/link";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const Main = () => {
-  const { initializeFarm, loading, isReady } = useInitializeFarm();
-  const [farmPubKey, setFarmPubKey] = useState<PublicKey | null>(null);
+  const { initializeFarm, isLoading, isReady } = useInitializeFarm();
+  const [farm, setFarm] = useState<PublicKey | null>(null);
 
-  const createFarm = async () => {
+  const handleClick = async () => {
     try {
-      const { farm } = await initializeFarm();
-      setFarmPubKey(farm);
-      toast.success("Farm created successfully");
-    } catch (err) {
-      toast.error("Failed to create farm");
-      console.error(err);
+      const { farmAccount, farm } = await initializeFarm();
+      toast.info(farmAccount.name + " created!");
+
+      setFarm(farm);
+      console.log(farmAccount);
+    } catch (error) {
+      console.log(error);
+      toast.error("farm not created, something went wrong.");
     }
   };
-
   return (
     <div className="space-y-4 flex flex-col items-center justify-center">
-      <>
-        {farmPubKey && (
-          <>
-            <h1 className="text-xl px-2">{farmPubKey?.toString()}</h1>
-            <Button asChild variant={"secondary"}>
-              <Link
-                href={`https://explorer.solana.com/address/${farmPubKey?.toString()}?cluster=devnet`}
-                target="_blank"
-              >
-                Solana Explorer Link
-              </Link>
-            </Button>
-          </>
-        )}
-      </>
-      <Button onClick={createFarm} disabled= {!isReady || loading}>
-        {loading ? "Creating Farm..." : "Create Farm"}
+      {farm && (
+        <>
+          <h1 className="text-2xl text-green-600">{farm.toString()}</h1>
+          <Button asChild variant={"secondary"}>
+            <Link
+              href={`https://explorer.solana.com/address/${farm}?cluster=devnet`}
+              target="blank"
+            >
+              View On Solana Explorer
+            </Link>
+          </Button>
+        </>
+      )}
+      <Button onClick={handleClick} disabled= {!isReady || isLoading}>
+        {isLoading ? "Creating Farm..." : "Create Farm"}
       </Button>
     </div>
   );

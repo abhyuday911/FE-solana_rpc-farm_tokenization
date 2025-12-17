@@ -1,4 +1,4 @@
-export const FARM_IDL = {
+export const farmIdl = {
     "address": "Ard8wQpNdajcUvc9amhbxqdPHt6rDotjDWyt4NTTCkmT",
     "metadata": {
         "name": "farm_tokenization",
