@@ -115,7 +115,14 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.wallet-adapter-button-trigger {
+  height: auto !important;
+  @apply !text-center !flex !justify-center;
+  @apply !rounded-md !transition-all !w-full;
 }

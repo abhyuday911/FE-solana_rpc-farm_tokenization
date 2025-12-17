@@ -57,7 +57,7 @@ const Main = () => {
     <div className="space-y-4 flex flex-col items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-md bg-green-900/10 border p-6 rounded-lg space-y-4 mb-20"
+        className="w-md bg-green-900/10 border p-6 rounded-lg space-y-4"
       >
         <InputGroup>
           <InputGroupInput
